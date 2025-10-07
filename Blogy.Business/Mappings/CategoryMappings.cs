@@ -4,9 +4,9 @@ using Blogy.Entity.Entites;
 
 namespace Blogy.Business.Mappings;
 
-public class CategoryMapping : Profile
+public class CategoryMappings : Profile
 {
-    public CategoryMapping()
+    public CategoryMappings()
     {
         CreateMap<Category, ResultCategoryDto>().ReverseMap();
         CreateMap<Category, UpdateCategoryDto>().ReverseMap();
