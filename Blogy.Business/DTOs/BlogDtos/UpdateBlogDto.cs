@@ -1,6 +1,8 @@
-﻿namespace Blogy.Business.DTOs.BlogDtos;
+﻿using Blogy.Business.DTOs.Common;
 
-public class CreateBlogDtos
+namespace Blogy.Business.DTOs.BlogDtos;
+
+public class UpdateBlogDto : BaseDto
 {
     public string? Title { get; set; }
     public string? Description { get; set; }

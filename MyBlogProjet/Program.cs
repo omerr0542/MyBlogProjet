@@ -10,6 +10,25 @@ using Blogy.DataAccess.Repositories.TagRepositories;
 using Microsoft.EntityFrameworkCore;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Blogy.Business.Services.BlogServices;
+
+// Dependency Injection Kayýt Türleri
+/*
+ Kayýt Türü     | Oluþum Zamaný                     | Ömür  | Paylaþým Alaný             | Kullaným Örneði
+ -----------------------------------------------------------------------------------------------
+ AddTransient   | Her enjeksiyon çaðrýsýnda         | Kýsa  | Her nesne için ayrý        | Helper / Service
+ AddScoped      | Her HTTP Request baþýnda          | Orta  | Ayný request içinde ortak  | DbContext
+ AddSingleton   | Uygulama baþýnda (ilk kullanýmda) | Uzun  | Tüm uygulamada ortak       | Logger / Cache
+ -----------------------------------------------------------------------------------------------
+
+Örneðin
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddTransient<IEmailSender, EmailSender>();  // her seferinde yeni instance
+    services.AddScoped<IOrderRepository, OrderRepository>(); // her request'te ayný instance
+    services.AddSingleton<ILogService, LogService>(); // uygulama boyunca tek instance
+}
+ */
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -23,12 +42,17 @@ builder.Services.AddFluentValidationAutoValidation()          // FluentValidatio
 
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+
 builder.Services.AddScoped<IBlogRepository, BlogRepository>();
+builder.Services.AddScoped<IBlogService, BlogService>();
+
 builder.Services.AddScoped<IBlogTagRepository, BlogTagRepository>();
+
 builder.Services.AddScoped<ISocialRepository, SocialRepository>();
+
 builder.Services.AddScoped<ITagRepository, TagRepository>();
 
-builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
