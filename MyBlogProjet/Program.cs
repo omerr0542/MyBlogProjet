@@ -1,5 +1,6 @@
 using Blogy.Business.Mappings;
 using Blogy.Business.Services.CategoryService;
+using Blogy.Business.Validators.CategoryValidators;
 using Blogy.DataAccess.Context;
 using Blogy.DataAccess.Repositories.BlogRepository;
 using Blogy.DataAccess.Repositories.BlogTagRepository;
@@ -7,12 +8,19 @@ using Blogy.DataAccess.Repositories.CategoryRepository;
 using Blogy.DataAccess.Repositories.SocialRepositories;
 using Blogy.DataAccess.Repositories.TagRepositories;
 using Microsoft.EntityFrameworkCore;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddAutoMapper(typeof(CategoryMappings).Assembly); // AutoMapper'ý CategoryMappings sýnýfýnýn bulunduðu assembly üzerinden tarayarak tüm mapping profillerini yükler.
 // Assembly, derleme anlamýna gelir. Yani bu kod, AutoMapper'ýn CategoryMappings sýnýfýnýn tanýmlý olduðu derlemeyi (assembly) bulup, o derleme içindeki tüm mapping profillerini otomatik olarak yüklemesini saðlar. Bu sayede, uygulama içinde baþka mapping profilleri eklenirse, bunlar da otomatik olarak tanýnýr ve kullanýlabilir hale gelir.
+
+builder.Services.AddFluentValidationAutoValidation()          // FluentValidation'ý MVC pipeline’a ekler
+                .AddFluentValidationClientsideAdapters()       // Client-side validation (tarayýcýda anýnda hata gösterimi)
+                .AddValidatorsFromAssembly(typeof(CreateCategoryValidator).Assembly); // FluentValidation kütüphanesini kullanarak, CreateCategoryValidator sýnýfýnýn bulunduðu assembly içindeki tüm validator sýnýflarýný otomatik olarak bulup kaydeder.
+
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IBlogRepository, BlogRepository>();
@@ -45,6 +53,13 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapStaticAssets();
+
+// Areas için route tanýmý. Areas, büyük uygulamalarda modülerlik saðlar.
+// Areas, uygulamayý farklý bölümlere ayýrarak, her bölümün kendi controller, view ve model setine sahip olmasýný saðlar.
+app.MapControllerRoute( 
+            name: "areas",
+            pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+          );
 
 app.MapControllerRoute(
     name: "default",

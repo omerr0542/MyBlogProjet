@@ -1,4 +1,5 @@
 ﻿using Blogy.DataAccess.Context;
+using Blogy.Entity.Entites;
 using Blogy.Entity.Entites.Common;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -48,6 +49,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
     public async Task UpdateAsync(TEntity entity)
     {
         _context.Update(entity);
+        _context.Entry(entity).Property(x => x.CreatedDate).IsModified = false; // CreatedDate alanının güncellenmesini engelle
         await _context.SaveChangesAsync();
     }
 }
