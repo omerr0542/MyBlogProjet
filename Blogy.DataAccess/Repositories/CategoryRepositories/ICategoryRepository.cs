@@ -5,4 +5,5 @@ namespace Blogy.DataAccess.Repositories.CategoryRepository;
 
 public interface ICategoryRepository : IGenericRepository<Category>
 {
+    Task <List<Category>> GetCategoriesWithBlogsAsync();
 }

@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Blogy.Business.Services.BlogServices;
+using System.Text.Json.Serialization;
 
 // Dependency Injection Kayýt Türleri
 /*
@@ -59,7 +60,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
 
 var app = builder.Build();
 
@@ -80,7 +84,7 @@ app.MapStaticAssets();
 
 // Areas için route tanýmý. Areas, büyük uygulamalarda modülerlik saðlar.
 // Areas, uygulamayý farklý bölümlere ayýrarak, her bölümün kendi controller, view ve model setine sahip olmasýný saðlar.
-app.MapControllerRoute( 
+app.MapControllerRoute(
             name: "areas",
             pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
           );

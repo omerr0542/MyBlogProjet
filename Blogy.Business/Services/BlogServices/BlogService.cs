@@ -26,6 +26,12 @@ public class BlogService(IBlogRepository _blogRepository, IMapper _mapper) : IBl
         return _mapper.Map<IList<ResultBlogDto>>(values);
     }
 
+    public async Task<List<ResultBlogDto>> GetBlogsByCategoryIdAsync(int CategoryId)
+    {
+        var values = await _blogRepository.GetAllAsync(x => x.CategoryId == CategoryId);
+        return _mapper.Map<List<ResultBlogDto>>(values);
+    }
+
     public async Task<List<ResultBlogDto>> GetBlogsWithCategoryAsync()
     {
         var values = await _blogRepository.GetBlogsWithCategoryAsync();

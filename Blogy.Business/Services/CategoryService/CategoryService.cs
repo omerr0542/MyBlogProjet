@@ -39,6 +39,12 @@ public class CategoryService : ICategoryService
         return _mapper.Map<UpdateCategoryDto>(category);
     }
 
+    public async Task<List<ResultCategoryDto>> GetCategoriesWithBlogsAsync()
+    {
+        var categories = await _categoryRepository.GetCategoriesWithBlogsAsync();
+        return _mapper.Map<List<ResultCategoryDto>>(categories);
+    }
+
     public async Task UpdateAsync(UpdateCategoryDto updateCategoryDto)
     {
         var category = _mapper.Map<Category>(updateCategoryDto);
