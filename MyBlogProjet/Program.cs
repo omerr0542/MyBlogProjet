@@ -28,6 +28,11 @@ builder.Services.AddRepositoriesExt(builder.Configuration);
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.ConfigureApplicationCookie(config =>
+{
+    config.LoginPath = "/Login/Index";
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -40,7 +45,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();

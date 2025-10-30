@@ -2,6 +2,7 @@
 using Blogy.Business.DTOs.CategoryDtos;
 using Blogy.Business.Services.BlogServices;
 using Blogy.Business.Services.CategoryService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 namespace MyBlogProjet.Areas.Admin.Controllers;
 
 [Area("Admin")]
+[Authorize]
 public class BlogController(IBlogService _blogService, ICategoryService categoryService) : Controller
 {
     public async Task<IActionResult> Index()
