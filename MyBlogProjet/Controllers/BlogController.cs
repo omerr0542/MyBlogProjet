@@ -2,7 +2,7 @@
 using Blogy.Business.Services.CategoryService;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MyBlogProjet.Controllers
+namespace MyBlogProject.Controllers
 {
     public class BlogController(IBlogService blogService, ICategoryService categoryService) : Controller
     {

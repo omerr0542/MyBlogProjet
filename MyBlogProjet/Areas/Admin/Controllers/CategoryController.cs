@@ -3,7 +3,7 @@ using Blogy.Business.Services.CategoryService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MyBlogProjet.Areas.Admin.Controllers
+namespace MyBlogProject.Areas.Admin.Controllers
 {
     [Area("Admin")] // Controller'ın Admin alanına ait olduğunu belirtir
     [Authorize]

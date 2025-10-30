@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace MyBlogProjet.Areas.Admin.Controllers
+namespace MyBlogProject.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize]
@@ -35,6 +35,14 @@ namespace MyBlogProjet.Areas.Admin.Controllers
                 }
                 return View(role);
             }
+
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> DeleteRole(int id)
+        {
+            var role = await _roleManager.FindByIdAsync(id.ToString());
+            await _roleManager.DeleteAsync(role);
 
             return RedirectToAction("Index");
         }

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Threading.Tasks;
 
-namespace MyBlogProjet.Areas.Admin.Controllers;
+namespace MyBlogProject.Areas.Admin.Controllers;
 
 [Area("Admin")]
 [Authorize]

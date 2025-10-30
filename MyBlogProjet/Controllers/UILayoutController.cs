@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace MyBlogProjet.Controllers
+namespace MyBlogProject.Controllers
 {
     public class UILayoutController : Controller
     {

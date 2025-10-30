@@ -3,7 +3,7 @@ using Blogy.Entity.Entites;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MyBlogProjet.Controllers
+namespace MyBlogProject.Controllers
 {
     public class LoginController(SignInManager<AppUser> signInManager) : Controller
     {

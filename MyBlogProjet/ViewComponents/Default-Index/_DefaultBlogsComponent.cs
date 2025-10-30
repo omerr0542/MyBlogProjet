@@ -2,7 +2,7 @@
 using Blogy.Business.Services.CategoryService;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MyBlogProjet.ViewComponents.Default_Index
+namespace MyBlogProject.ViewComponents.Default_Index
 {
     public class _DefaultBlogsComponent (ICategoryService categoryService): ViewComponent
     {
