@@ -44,6 +44,12 @@ public class BlogService(IBlogRepository _blogRepository, IMapper _mapper) : IBl
         return _mapper.Map<UpdateBlogDto>(values);
     }
 
+    public async Task<List<ResultBlogDto>> GetLastNBlogsAsync(int n)
+    {
+        var values = await _blogRepository.GetLastNBlogsAsync(n);
+        return _mapper.Map<List<ResultBlogDto>>(values);
+    }
+
     public async Task UpdateAsync(UpdateBlogDto updateDto)
     {
         var entity = _mapper.Map<Blog>(updateDto);

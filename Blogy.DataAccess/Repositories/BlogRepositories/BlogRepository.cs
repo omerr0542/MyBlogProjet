@@ -18,6 +18,6 @@ public class BlogRepository : GenericRepository<Blog>, IBlogRepository
 
     public async Task<List<Blog>> GetLastNBlogsAsync(int n)
     {
-        return await _table.OrderByDescending(b => b.CreatedDate).Take(n).Include(b => b.Category).ToListAsync().;
+        return await _table.OrderByDescending(b => b.CreatedDate).Take(n).Include(b => b.Category).ToListAsync();
     }
 }

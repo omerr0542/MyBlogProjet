@@ -7,4 +7,5 @@ public interface IBlogService : IGenericService<ResultBlogDto, UpdateBlogDto, Cr
 {
     Task<List<ResultBlogDto>> GetBlogsWithCategoryAsync();
     Task<List<ResultBlogDto>> GetBlogsByCategoryIdAsync(int CategoryId);
+    Task<List<ResultBlogDto>> GetLastNBlogsAsync(int n);
 }
