@@ -3,11 +3,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MyBlogProject.Consts;
 
 namespace MyBlogProject.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    [Authorize]
+    [Area(Roles.Admin)]
+    [Authorize(Roles = $"{Roles.Admin}")]
     public class RoleController(RoleManager<AppRole> _roleManager) : Controller
     {
         public async Task<IActionResult> Index()
@@ -27,7 +28,7 @@ namespace MyBlogProject.Areas.Admin.Controllers
         {
             var result = await _roleManager.CreateAsync(role);
 
-            if(!result.Succeeded)
+            if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)
                 {

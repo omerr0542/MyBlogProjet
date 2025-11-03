@@ -2,8 +2,8 @@
 {
     public static class Roles
     {
-        public const string AdminArea = "Admin";
-        public const string WriterArea = "Writer";
-        public const string UserArea = "User";
+        public const string Admin= "Admin";
+        public const string Writer= "Writer";
+        public const string User= "User";
     }
 }

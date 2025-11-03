@@ -5,12 +5,13 @@ using Blogy.Business.Services.CategoryService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using MyBlogProject.Consts;
 using System.Threading.Tasks;
 
 namespace MyBlogProject.Areas.Admin.Controllers;
 
-[Area("Admin")]
-[Authorize]
+[Area(Roles.Admin)] 
+[Authorize(Roles = $"{Roles.Admin}")]
 public class BlogController(IBlogService _blogService, ICategoryService categoryService) : Controller
 {
     public async Task<IActionResult> Index()
@@ -64,7 +65,7 @@ public class BlogController(IBlogService _blogService, ICategoryService category
     {
         if (!ModelState.IsValid)
         {
-            await GetCategoriesAsync(); 
+            await GetCategoriesAsync();
             return View(blog);
         }
         await _blogService.UpdateAsync(blog);
