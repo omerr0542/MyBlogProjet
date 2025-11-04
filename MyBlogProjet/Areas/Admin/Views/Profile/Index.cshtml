@@ -1,0 +1,60 @@
+﻿@model EditProfileDto
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Profil Güncelle</h3>
+
+<div class="card text-center text-secondary">
+    <div class="card-title">
+        <h4>Profil Resmi</h4>
+    </div>
+    <div class="card-body">
+        <img src="@Model.ProfileImageUrl" style="height: 200px" alt="Profil Resmi" />
+    </div>
+</div>
+
+<form method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-6">
+            <label>Adınız:</label>
+            <input type="text" asp-for="FirstName" class="form-control" required />
+
+            <label>Kullanıcı Adınız:</label>
+            <input type="text" asp-for="UserName" class="form-control" required />
+
+            <label>Ünvan:</label>
+            <input type="text" asp-for="Title" class="form-control" />
+        </div>
+
+
+        <div class="col-6">
+            <label>Soyadınız:</label>
+            <input type="text" asp-for="LastName" class="form-control" required />
+
+            <label>Email:</label>
+            <input type="email" asp-for="Email" class="form-control" required />
+
+            <label>Telefon Numarası:</label>
+            <input type="text" asp-for="PhoneNumber" class="form-control" />
+
+            <input type="hidden" asp-for="ProfileImageUrl" />
+        </div>
+
+        <div class="col-12">
+            <label>Profil Resmi Seçiniz</label>
+            <input type="file" asp-for="ImageFile" class="form-control" />
+
+            <br />
+            <br />
+
+            <label>Bilgileri Güncellemek İçin Mevcut Şifrenizi Giriniz!</label>
+            <input type="password" asp-for="CurrentPassword" class="form-control" required/>
+        </div>
+
+        <br />
+        <span class="text-danger">@Html.ValidationSummary()</span>
+        <button class="btn btn-outline-dark">Bilgileri Güncelle</button>
+    </div>
+</form>

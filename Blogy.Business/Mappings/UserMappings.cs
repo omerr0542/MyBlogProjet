@@ -10,6 +10,8 @@ namespace Blogy.Business.Mappings
         {
             CreateMap<AppUser, ResultUserDto>()
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"));
+
+            CreateMap<AppUser, EditProfileDto>().ReverseMap();
         }
     }
 }
