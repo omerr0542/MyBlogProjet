@@ -1,5 +1,6 @@
 using Blogy.Business.Extensions;
 using Blogy.DataAccess.Extensions;
+using MyBlogProjet.Filters;
 using System.Text.Json.Serialization;
 
 // Dependency Injection Kayýt Türleri
@@ -26,7 +27,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddServicesExt();
 builder.Services.AddRepositoriesExt(builder.Configuration);
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add<ValidationExceptionFilter>();
+});
 
 builder.Services.ConfigureApplicationCookie(config =>
 {

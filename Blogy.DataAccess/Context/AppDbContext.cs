@@ -16,4 +16,5 @@ public class AppDbContext : IdentityDbContext<AppUser, AppRole, int>
     public DbSet<BlogTag> BlogTags { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Social> Socials { get; set; }
+    public DbSet<Comment> Comments { get; set; }
 }

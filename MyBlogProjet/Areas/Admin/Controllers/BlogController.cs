@@ -1,8 +1,11 @@
-﻿using Blogy.Business.DTOs.BlogDtos;
+﻿using AutoMapper;
+using Blogy.Business.DTOs.BlogDtos;
 using Blogy.Business.DTOs.CategoryDtos;
 using Blogy.Business.Services.BlogServices;
 using Blogy.Business.Services.CategoryService;
+using Blogy.Entity.Entites;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MyBlogProject.Consts;
@@ -12,7 +15,10 @@ namespace MyBlogProject.Areas.Admin.Controllers;
 
 [Area(Roles.Admin)] 
 [Authorize(Roles = $"{Roles.Admin}")]
-public class BlogController(IBlogService _blogService, ICategoryService categoryService) : Controller
+public class BlogController(IBlogService _blogService, 
+                            ICategoryService categoryService, 
+                            UserManager<AppUser> _userManager,
+                            IMapper _mapper) : Controller
 {
     public async Task<IActionResult> Index()
     {
@@ -48,6 +54,8 @@ public class BlogController(IBlogService _blogService, ICategoryService category
             return View(blog);
         }
 
+        var user = await _userManager.FindByNameAsync(User.Identity.Name);
+        blog.WriterId = user.Id;
         await _blogService.CreateAsync(blog);
         return RedirectToAction("Index");
     }
@@ -68,6 +76,9 @@ public class BlogController(IBlogService _blogService, ICategoryService category
             await GetCategoriesAsync();
             return View(blog);
         }
+
+        var user = await _userManager.FindByNameAsync(User.Identity.Name);
+        blog.WriterId = user.Id;
         await _blogService.UpdateAsync(blog);
         return RedirectToAction("Index");
     }

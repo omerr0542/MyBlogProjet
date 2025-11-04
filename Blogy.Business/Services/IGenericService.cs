@@ -34,7 +34,7 @@ public interface IGenericService<TResult, TUpdate, TCreate>
     /// This is a specialized convenience method for blog results.
     /// </remarks>
     /// <returns>A task that returns the collection of blog result DTOs.</returns>
-    Task<IList<ResultBlogDto>> GetAllAsync();
+    Task<IList<TResult>> GetAllAsync();
 
     /// <summary>
     /// Updates an existing entity using the provided update DTO.

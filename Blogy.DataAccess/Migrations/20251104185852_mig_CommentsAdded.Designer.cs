@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blogy.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251030092249_mig_CommentsAdded")]
+    [Migration("20251104185852_mig_CommentsAdded")]
     partial class mig_CommentsAdded
     {
         /// <inheritdoc />
@@ -256,7 +256,7 @@ namespace Blogy.DataAccess.Migrations
 
                     b.HasIndex("WriterId");
 
-                    b.ToTable("Comment");
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("Blogy.Entity.Entites.Social", b =>

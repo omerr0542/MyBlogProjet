@@ -253,7 +253,7 @@ namespace Blogy.DataAccess.Migrations
 
                     b.HasIndex("WriterId");
 
-                    b.ToTable("Comment");
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("Blogy.Entity.Entites.Social", b =>
