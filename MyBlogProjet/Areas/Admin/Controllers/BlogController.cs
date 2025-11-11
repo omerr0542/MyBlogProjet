@@ -22,7 +22,7 @@ public class BlogController(IBlogService _blogService,
 {
     public async Task<IActionResult> Index()
     {
-        var blogs = await _blogService.GetBlogsWithCategoryAsync();
+        var blogs = await _blogService.GetAllAsync();
         return View(blogs);
     }
 

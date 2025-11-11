@@ -11,9 +11,9 @@ namespace Blogy.Entity.Entites
     {
         public string Content { get; set; }
 
-        public Blog Blog { get; set; }
+        public virtual Blog Blog { get; set; }
         public int BlogId { get; set; }
-        public AppUser Writer { get; set; }
+        public virtual AppUser Writer { get; set; }
         public int WriterId { get; set; }
     }
 }

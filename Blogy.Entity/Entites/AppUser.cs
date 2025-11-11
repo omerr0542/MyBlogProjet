@@ -9,8 +9,8 @@ namespace Blogy.Entity.Entites
         public string? Title { get; set; }
         public string? ProfileImageUrl { get; set; }
 
-        public IList<Blog> Blogs { get; set; }
-        public IList<Comment> Comments { get; set; }
+        public virtual IList<Blog> Blogs { get; set; } // Lazy loading için virtual ekledik. Bu sayede ihtiyaç duyulduğunda yüklenir.
+        public virtual IList<Comment> Comments { get; set; }
 
     }
 }

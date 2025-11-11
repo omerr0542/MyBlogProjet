@@ -11,5 +11,6 @@ namespace Blogy.Business.DTOs.CommentDtos
         public int BlogId { get; set; }
         public ResultUserDto Writer { get; set; }
         public int WriterId { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }

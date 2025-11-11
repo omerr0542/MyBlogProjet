@@ -6,6 +6,8 @@ using Blogy.Business.Validators.CategoryValidators;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
+using Scrutor;
+using System.Reflection;
 
 namespace Blogy.Business.Extensions
 {
@@ -13,7 +15,15 @@ namespace Blogy.Business.Extensions
     {
         public static void AddServicesExt(this IServiceCollection services)
         {
-
+            services.Scan(opt =>
+            {
+                opt.FromAssemblies(Assembly.GetExecutingAssembly())
+                    .AddClasses(publicOnly: false)
+                    .UsingRegistrationStrategy(registrationStrategy: RegistrationStrategy.Skip) // Bu satır, Scrutor'un mevcut kayıtları atlamasını sağlar.
+                    .AsMatchingInterface()                                                      // Sınıf adları ile eşleşen arayüzlere göre kaydetme işlemi yapılır.
+                    .AsImplementedInterfaces()                                                  // Sınıfların uyguladığı tüm arayüzlere göre kaydetme işlemi yapılır.
+                    .WithScopedLifetime();                                                      // Kaynakların yaşam süresi scoped olarak ayarlanır.
+            });
 
             services.AddAutoMapper(typeof(CategoryMappings).Assembly); // AutoMapper'ı CategoryMappings sınıfının bulunduğu assembly üzerinden tarayarak tüm mapping profillerini yükler.
                                                                                // Assembly, derleme anlamına gelir. Yani bu kod, AutoMapper'ın CategoryMappings sınıfının tanımlı olduğu derlemeyi (assembly) bulup, o derleme içindeki tüm mapping profillerini otomatik olarak yüklemesini sağlar. Bu sayede, uygulama içinde başka mapping profilleri eklenirse, bunlar da otomatik olarak tanınır ve kullanılabilir hale gelir.
@@ -22,9 +32,9 @@ namespace Blogy.Business.Extensions
                             .AddFluentValidationClientsideAdapters()       // Client-side validation (tarayıcıda anında hata gösterimi)
                             .AddValidatorsFromAssembly(typeof(CreateCategoryValidator).Assembly); // FluentValidation kütüphanesini kullanarak, CreateCategoryValidator sınıfının bulunduğu assembly içindeki tüm validator sınıflarını otomatik olarak bulup kaydeder.
 
-            services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<IBlogService, BlogService>();
-            services.AddScoped<ICommentService, CommentService>();
+            //services.AddScoped<ICategoryService, CategoryService>();
+            //services.AddScoped<IBlogService, BlogService>();
+            //services.AddScoped<ICommentService, CommentService>();
         }
     }
 }

@@ -9,6 +9,8 @@ using Blogy.Entity.Entites;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Scrutor;
+using System.Reflection;
 
 namespace Blogy.DataAccess.Extensions
 {
@@ -23,16 +25,28 @@ namespace Blogy.DataAccess.Extensions
             // Örneğin, bir blog yazısı eklemek, silmek veya güncellemek gibi işlemler için ilgili repository'ler kullanılır.
             // Bu sayede, uygulama katmanları arasında gevşek bağlılık sağlanır ve test edilebilirlik artırılır.
             // Uygulama içinde bir controller veya servis CategoryRepository'ye ihtiyaç duyduğunda, bu repository otomatik olarak enjekte edilir.
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
-            services.AddScoped<IBlogRepository, BlogRepository>();
-            services.AddScoped<IBlogTagRepository, BlogTagRepository>();
-            services.AddScoped<ISocialRepository, SocialRepository>();
-            services.AddScoped<ITagRepository, TagRepository>();
-            services.AddScoped<ICommentRepository, CommentRepository>();
+            //services.AddScoped<ICategoryRepository, CategoryRepository>();
+            //services.AddScoped<IBlogRepository, BlogRepository>();
+            //services.AddScoped<IBlogTagRepository, BlogTagRepository>();
+            //services.AddScoped<ISocialRepository, SocialRepository>();
+            //services.AddScoped<ITagRepository, TagRepository>();
+            //services.AddScoped<ICommentRepository, CommentRepository>();
+
+            // Scrutor kütüphanesi kullanılarak, belirli bir aralıktaki tüm repository sınıflarını otomatik olarak tarayıp kaydetmek mümkündür.
+            services.Scan(opt =>
+            {
+                opt.FromAssemblies(Assembly.GetExecutingAssembly())
+                    .AddClasses(publicOnly: false)
+                    .UsingRegistrationStrategy(registrationStrategy: RegistrationStrategy.Skip) // Bu satır, Scrutor'un mevcut kayıtları atlamasını sağlar.
+                    .AsMatchingInterface()                                                      // Sınıf adları ile eşleşen arayüzlere göre kaydetme işlemi yapılır.
+                    .AsImplementedInterfaces()                                                  // Sınıfların uyguladığı tüm arayüzlere göre kaydetme işlemi yapılır.
+                    .WithScopedLifetime();                                                      // Kaynakların yaşam süresi scoped olarak ayarlanır.
+            }); 
 
             services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+                options.UseLazyLoadingProxies();
             });
 
             services.AddIdentity<AppUser, AppRole>(options =>

@@ -20,6 +20,8 @@ public interface IGenericService<TResult, TUpdate, TCreate>
     /// <returns>A task that completes with the update DTO.</returns>
     Task<TUpdate> GetByIdAsync(int id); // Burada TUpdate kullanmamın sebebi, güncelleme işlemi için gerekli olan verileri döndürmek istemem.
 
+    Task<TResult> GetSingleByIdAsync(int id);
+
     /// <summary>
     /// Creates a new entity using the provided create DTO.
     /// </summary>
